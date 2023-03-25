@@ -50,8 +50,8 @@ SANCTUM_STATEFUL_DOMAINS=localhost:8000
 ```
 - Terakhir, tambahkan middleware group jwt.verify pada file app/Http/Kernel.php seperti ini:
 ```
-protected $routeMiddleware = [
-        'jwt.verify' => \App\Http\Middleware\JwtMiddleware::class,
-    ];
+'jwt.verify' => [
+   \Tymon\JWTAuth\Http\Middleware\Authenticate::class,
+],
 ```
 

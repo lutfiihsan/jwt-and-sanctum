@@ -21,7 +21,7 @@ JWT_DOMAIN=abc.com
 JWT_ALGO=HS256
 
 API_KEY=123
-``
+```
 
 4. Jalankan `database:create nama_database` untuk membuat database
 5. Konfiguari Laravel Sanctum : 

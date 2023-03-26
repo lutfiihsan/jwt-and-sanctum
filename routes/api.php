@@ -13,10 +13,13 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-Route::group(['middleware' => ['api']], function () {
-    Route::post('/login', 'App\Http\Controllers\AuthController@login');
-    Route::post('/register', 'App\Http\Controllers\AuthController@register')->middleware('jwt.auth');
+Route::post('/login', 'App\Http\Controllers\AuthController@login');
+Route::group(['middleware' => ['auth:sanctum']], function () {
+    Route::post('/logout', 'App\Http\Controllers\AuthController@logout');
+    Route::post('/user', 'App\Http\Controllers\AuthController@user');
+    
+    Route::post('/token', 'App\Http\Controllers\TokenController@create');
+    Route::post('/token/check', 'App\Http\Controllers\TokenController@validateToken');
+    Route::post('/token/refresh', 'App\Http\Controllers\TokenController@refreshToken');
 });
-
-Route::post('/token', 'App\Http\Controllers\TokenController@create');
-Route::post('/token/check', 'App\Http\Controllers\TokenController@validateToken');
+Route::post('/register', 'App\Http\Controllers\AuthController@register')->middleware('jwt.auth');

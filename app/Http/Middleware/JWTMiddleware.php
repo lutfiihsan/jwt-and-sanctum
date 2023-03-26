@@ -19,7 +19,7 @@ class JWTMiddleware
     public function handle(Request $request, Closure $next)
     {
         // Get the token from the request header
-        $token = $request->bearerToken();
+        $token = $request->header('client-secret');
 
         // Check if the token exists in the database
         $savedToken = Token::where('token', $token)->first();

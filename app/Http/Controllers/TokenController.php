@@ -3,12 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Token;
-use Dotenv\Parser\Value;
-use Illuminate\Support\Str;
 use Illuminate\Http\Request;
-use PHPOpenSourceSaver\JWTAuth\JWTGuard;
 use Illuminate\Support\Facades\Validator;
-use PHPOpenSourceSaver\JWTAuth\Facades\JWTAuth;
 
 class TokenController extends Controller
 {
@@ -41,13 +37,13 @@ class TokenController extends Controller
         ]);
 
         // Return the token to the client
-        return response()->json(['token' => $newToken->token]);
+        return response()->json(['client-secret' => $newToken->token]);
     }
 
     public function validateToken(Request $request)
     {
         // Get the token from the request header
-        $token = $request->bearerToken();
+        $token = $request->header('client-secret');
 
         // Check if the token exists in the database
         $savedToken = Token::where('token', $token)->first();
@@ -78,5 +74,36 @@ class TokenController extends Controller
 
         // If everything is valid, return success message
         return response()->json(['message' => 'Valid token'], 200);
+    }
+
+    public function refreshToken(Request $request)
+    {
+        // Get the token from the request header
+        $token = $request->header('client-secret');
+
+        // Check if the token exists in the database
+        $savedToken = Token::where('token', $token)->first();
+
+        if (!$savedToken) {
+            return response()->json(['error' => 'Invalid token'], 401);
+        }
+
+        // Generate a new token with updated expiration time
+        $payload = json_decode($savedToken->payload, true);
+        $newPayload = [
+            'iss' => $payload['iss'],
+            'iat' => time(),
+            'exp' => strtotime('+1 hour'),
+        ];
+        $newToken = hash('sha256', $request->api_key . json_encode($newPayload));
+
+        // Update the saved token with the new token and payload
+        $savedToken->update([
+            'token' => $newToken,
+            'payload' => json_encode($newPayload),
+        ]);
+
+        // Return the new token to the client
+        return response()->json(['client-secret' => $newToken]);
     }
 }

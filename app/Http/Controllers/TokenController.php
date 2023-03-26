@@ -55,12 +55,12 @@ class TokenController extends Controller
         // Verify the token payload
         $payload = json_decode($savedToken->payload, true);
 
-        $domain = 'abc.com'; // ganti dengan domain website Anda
+        $domain = config('app.domain_wl'); // ganti dengan domain website Anda
         if ($payload['iss'] !== $domain) {
             return response()->json(['error' => 'Invalid token'], 401);
         }
 
-        $api_key = '123';
+        $api_key = config('app.api_key');
         $generatedToken = hash('sha256', $api_key . $savedToken->payload);
         if ($generatedToken !== $savedToken->token) {
             return response()->json(['error' => 'Invalid token'], 401);

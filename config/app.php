@@ -145,6 +145,10 @@ return [
 
     'timezone' => 'Asia/Jakarta',
 
+    'api_key' => env('API_KEY'),
+
+    'domain_wl' => env('JWT_DOMAIN'),
+
     /*
     |--------------------------------------------------------------------------
     | Autoloaded Service Providers

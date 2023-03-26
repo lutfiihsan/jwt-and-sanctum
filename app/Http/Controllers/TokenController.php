@@ -43,7 +43,7 @@ class TokenController extends Controller
     public function validateToken(Request $request)
     {
         // Get the token from the request header
-        $token = $request->header('client-secret');
+        $token = $request->input('client-secret');
 
         // Check if the token exists in the database
         $savedToken = Token::where('token', $token)->first();
@@ -61,7 +61,9 @@ class TokenController extends Controller
         }
 
         $api_key = config('app.api_key');
+
         $generatedToken = hash('sha256', $api_key . $savedToken->payload);
+
         if ($generatedToken !== $savedToken->token) {
             return response()->json(['error' => 'Invalid token'], 401);
         }
@@ -79,7 +81,7 @@ class TokenController extends Controller
     public function refreshToken(Request $request)
     {
         // Get the token from the request header
-        $token = $request->header('client-secret');
+        $token = $request->input('client-secret');
 
         // Check if the token exists in the database
         $savedToken = Token::where('token', $token)->first();
@@ -95,7 +97,7 @@ class TokenController extends Controller
             'iat' => time(),
             'exp' => strtotime('+1 hour'),
         ];
-        $newToken = hash('sha256', $request->api_key . json_encode($newPayload));
+        $newToken = hash('sha256', config('app.api_key') . json_encode($newPayload));
 
         // Update the saved token with the new token and payload
         $savedToken->update([

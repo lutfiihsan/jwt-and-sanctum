@@ -14,11 +14,7 @@ Dimana sanctum digunakan untuk autentikasi dan JWT-Auth digunakan untuk mengakse
 2. Jalankan `composer install`
 3. Copy file `.env.example` menjadi `.env` dan tambahkan ini :
 ```
-JWT_SECRET=8cQ0sN8CyeE0tGhF7EUaz8DcKtfG01CtrcV5lplKUVrrasIIs2PzFCq1tVzqOQOZ
-
 JWT_DOMAIN=abc.com
-
-JWT_ALGO=HS256
 
 API_KEY=123
 ```

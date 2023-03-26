@@ -4,6 +4,9 @@ Project ini dibangun dengan laravel 9 dan beberapa package tambahan seperti:
 
 - Database: MySQL
 - [Laravel Sanctum](https://laravel.com/docs/9.x/sanctum)
+- JWT-Auth Custom
+
+Dimana sanctum digunakan untuk autentikasi dan JWT-Auth digunakan untuk mengakses api public.
 
 ## Step Instalasi
 
@@ -15,18 +18,12 @@ Project ini dibangun dengan laravel 9 dan beberapa package tambahan seperti:
 - Install Laravel Sanctum dengan menjalankan `composer require laravel/sanctum`
 - Jalankan `php artisan migrate`
 - Jalankan `php artisan vendor:publish --provider="Laravel\Sanctum\SanctumServiceProvider"`
-- Modifikasi `config/cors.php` pada bagian `credentials` menjadi `true`
-- Tambahkan konfigurasi .env untuk Sanctum
-```
-SANCTUM_STATEFUL_DOMAINS=yourdomain.com
-SANCTUM_STATEFUL_DOMAINS=localhost:8000
-```
 - Setelah itu, buka file app/Http/Kernel.php. Pada bagian $middlewareGroups, tambahkan middleware group api:sanctum sebagai berikut:
 ```
 'api:sanctum' => [
             'throttle:api',
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
-            \Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful::class,
+            //\Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful::class,
         ],
 ```
 6. Konfigurasi JWT-Auth
@@ -36,3 +33,24 @@ SANCTUM_STATEFUL_DOMAINS=localhost:8000
         ], 
 ```
 
+## Step cara penggunaan
+
+1. Jalankan `php artisan serve`
+2. Register user baru dengan mengakses `http://localhost:8000/api/register` dengan method POST dan body sebagai berikut:
+```
+{
+    "name": "demo",
+    "email": "demo@gmail.com",
+    "password": "demo123",
+}
+```
+Lalu pilih authorization type `api_key', masukkan `key => 'client-secret'` dan `value => xxxxx`
+3. Login dengan mengakses `http://localhost:8000/api/login`
+4. Untuk melihat profile, silahkan akses `http://localhost:8000/api/user` dan masukkan token yang didapatkan saat login/register
+5. Untuk mendapatkan `client-secret`, akses `http://localhost:8000/api/token` dengan method POST dan body sebagai berikut :
+```
+{
+    'api_key' => dari env
+    'domain' => domain.com
+} 
+```

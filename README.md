@@ -12,7 +12,17 @@ Dimana sanctum digunakan untuk autentikasi dan JWT-Auth digunakan untuk mengakse
 
 1. Clone project ini dengan `git clone https://github.com/lutfiihsan/jwt-and-sanctum.git`
 2. Jalankan `composer install`
-3. Copy file `.env.example` menjadi `.env`
+3. Copy file `.env.example` menjadi `.env` dan tambahkan ini :
+```
+JWT_SECRET=8cQ0sN8CyeE0tGhF7EUaz8DcKtfG01CtrcV5lplKUVrrasIIs2PzFCq1tVzqOQOZ
+
+JWT_DOMAIN=abc.com
+
+JWT_ALGO=HS256
+
+API_KEY=123
+``
+
 4. Jalankan `database:create nama_database` untuk membuat database
 5. Konfiguari Laravel Sanctum : 
 - Install Laravel Sanctum dengan menjalankan `composer require laravel/sanctum`

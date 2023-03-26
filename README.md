@@ -44,7 +44,7 @@ Dimana sanctum digunakan untuk autentikasi dan JWT-Auth digunakan untuk mengakse
     "password": "demo123",
 }
 ```
-Lalu pilih authorization type `api_key', masukkan `key => 'client-secret'` dan `value => xxxxx`
+Lalu pilih authorization type `api_key`, masukkan `key => 'client-secret'` dan `value => xxxxx`
 3. Login dengan mengakses `http://localhost:8000/api/login`
 4. Untuk melihat profile, silahkan akses `http://localhost:8000/api/user` dan masukkan token yang didapatkan saat login/register
 5. Untuk mendapatkan `client-secret`, akses `http://localhost:8000/api/token` dengan method POST dan body sebagai berikut :

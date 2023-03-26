@@ -4,7 +4,6 @@ Project ini dibangun dengan laravel 9 dan beberapa package tambahan seperti:
 
 - Database: MySQL
 - [Laravel Sanctum](https://laravel.com/docs/9.x/sanctum)
-- [PHP-Open-Source-Saver/jwt-auth](https://github.com/PHP-Open-Source-Saver/jwt-auth)
 
 ## Step Instalasi
 
@@ -17,14 +16,6 @@ Project ini dibangun dengan laravel 9 dan beberapa package tambahan seperti:
 - Jalankan `php artisan migrate`
 - Jalankan `php artisan vendor:publish --provider="Laravel\Sanctum\SanctumServiceProvider"`
 - Modifikasi `config/cors.php` pada bagian `credentials` menjadi `true`
-- Setelah itu, buka file app/Http/Kernel.php. Pada bagian $middlewareGroups, tambahkan middleware group api:sanctum sebagai berikut:
-```
-'api' => [
-            'throttle:api',
-            \Illuminate\Routing\Middleware\SubstituteBindings::class,
-            \Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful::class,
-        ],
-```
 - Tambahkan konfigurasi .env untuk Sanctum
 ```
 SANCTUM_STATEFUL_DOMAINS=yourdomain.com
@@ -39,19 +30,9 @@ SANCTUM_STATEFUL_DOMAINS=localhost:8000
         ],
 ```
 6. Konfigurasi JWT-Auth
-- Install package jwt-auth dengan menjalankan `composer require php-open-source-saver/jwt-auth`
-- Jalankan `php artisan jwt:secret`
-- Modifikasi `config/auth.php` pada bagian `guards` menjadi seperti berikut:
-```
 'jwt' => [
             'driver' => 'jwt',
-            'provider' => 'users',
+            'provider' => 'tokens',
         ], 
-```
-- Terakhir, tambahkan middleware group jwt.verify pada file app/Http/Kernel.php seperti ini:
-```
-'jwt.verify' => [
-   \Tymon\JWTAuth\Http\Middleware\Authenticate::class,
-],
 ```
 

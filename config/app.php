@@ -143,6 +143,8 @@ return [
         // 'store'  => 'redis',
     ],
 
+    'timezone' => 'Asia/Jakarta',
+
     /*
     |--------------------------------------------------------------------------
     | Autoloaded Service Providers

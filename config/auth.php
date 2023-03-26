@@ -14,7 +14,7 @@ return [
     */
 
     'defaults' => [
-        'guard' => 'web',
+        'guard' => 'api',
         'passwords' => 'users',
     ],
 
@@ -36,12 +36,17 @@ return [
     */
 
     'guards' => [
-        'web' => [
-            'driver' => 'session',
+        'api' => [
+            'driver' => 'sanctum',
             'provider' => 'users',
         ],
         'jwt' => [
             'driver' => 'jwt',
+            'provider' => null,
+            'hash' => false,
+        ],
+        'web' => [
+            'driver' => 'session',
             'provider' => 'users',
         ],
     ],
@@ -68,12 +73,20 @@ return [
             'driver' => 'eloquent',
             'model' => App\Models\User::class,
         ],
+        'tokens' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Token::class,
+        ],
 
         // 'users' => [
         //     'driver' => 'database',
         //     'table' => 'users',
         // ],
     ],
+
+    // 'jwt' => [
+    //     'secret' => env('JWT_SECRET'),
+    // ],
 
     /*
     |--------------------------------------------------------------------------

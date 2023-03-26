@@ -27,6 +27,7 @@ Dimana sanctum digunakan untuk autentikasi dan JWT-Auth digunakan untuk mengakse
         ],
 ```
 6. Konfigurasi JWT-Auth
+```
 'jwt' => [
             'driver' => 'jwt',
             'provider' => 'tokens',

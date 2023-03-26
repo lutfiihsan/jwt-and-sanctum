@@ -24,25 +24,7 @@ API_KEY=123
 ```
 
 4. Jalankan `database:create nama_database` untuk membuat database
-5. Konfiguari Laravel Sanctum : 
-- Install Laravel Sanctum dengan menjalankan `composer require laravel/sanctum`
-- Jalankan `php artisan migrate`
-- Jalankan `php artisan vendor:publish --provider="Laravel\Sanctum\SanctumServiceProvider"`
-- Setelah itu, buka file app/Http/Kernel.php. Pada bagian $middlewareGroups, tambahkan middleware group api:sanctum sebagai berikut:
-```
-'api:sanctum' => [
-            'throttle:api',
-            \Illuminate\Routing\Middleware\SubstituteBindings::class,
-            //\Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful::class,
-        ],
-```
-6. Konfigurasi JWT-Auth
-```
-'jwt' => [
-            'driver' => 'jwt',
-            'provider' => 'tokens',
-        ], 
-```
+5. Jalankan `php artisan migrate`
 
 ## Step cara penggunaan
 
